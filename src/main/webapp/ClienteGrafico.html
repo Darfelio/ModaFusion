@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gráfico Estadístico Circular</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #444;
+      margin-top: 20px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    canvas {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .button-container {
+      margin-top: 30px;
+    }
+
+    .back-button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 18px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .back-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gráfico Estadístico Circular - Productos y Precios</h1>
+
+  <div class="container">
+    <canvas id="myChart"></canvas>
+    
+    <div class="button-container">
+      <a href="Cliente.jsp" class="back-button">Regresar</a>
+    </div>
+  </div>
+
+  <script>
+    // Datos de ejemplo
+    var nombres = [
+      'Juan',
+      'Maria',
+      'Carlos',
+      'Ana',
+      'Laura',
+      'Pedro',
+      'Sofia',
+      'Diego',
+      'Carolina'
+    ];
+    var precios = [10, 20, 15, 25, 18, 12, 17, 30, 35];
+
+    // Configuración del gráfico
+    var data = {
+      labels: nombres,
+      datasets: [{
+        data: precios,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33FF99', '#FF99FF', '#99CCFF', '#FF6633', '#99FF99', '#FFCC99'],
+        borderColor: '#fff',
+        borderWidth: 1
+      }]
+    };
+
+    // Crear el gráfico
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: data,
+      options: {
+        responsive: true,
+        legend: {
+          position: 'bottom',
+          labels: {
+            fontSize: 14,
+            fontColor: '#333'
+          }
+        },
+        title: {
+          display: true,
+          text: 'Distribución de Precios por Producto',
+          fontSize: 18,
+          fontColor: '#333'
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

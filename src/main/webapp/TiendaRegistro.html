@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Topitop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/adminlte.min.css" rel="stylesheet" type="text/css"/>
+  <!-- Incluimos el CDN de Bootstrap Icons para los íconos -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Agregar SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f9;
+    }
+
+    header {
+      background-color: #212529;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 10px;
+    }
+
+    nav ul li a {
+      color: #fff !important;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ffc107 !important;
+    }
+
+    section.hero {
+      background-image: url('foto/portada.jpg');
+      background-size: cover;
+      height: 600px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      text-align: center;
+      color: black;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      background-color: #ffffff;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    }
+
+    input.form-control:focus {
+      border-color: #ffc107;
+      box-shadow: 0 0 0 0.2rem rgba(255,193,7,.25);
+    }
+
+    button.btn-dark:hover {
+      background-color: #ffc107;
+      color: #000;
+      border: none;
+    }
+
+    footer {
+      background-color: #212529;
+      color: #fff;
+      padding: 15px 0;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark px-4">
+      <a class="navbar-brand fw-bold" href="#">Moda Fusion</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="Productos.jsp">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" href="Tienda.jsp">Tienda</a></li>
+          <li class="nav-item"><a class="nav-link" href="Cliente.jsp">Cliente</a></li>
+          <li class="nav-item"><a class="nav-link" href="Nosotros.jsp">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="stock">Stock</a></li>
+          <li class="nav-item"><a class="nav-link" href="pagina1.xhtml">Credito</a></li>
+          <li class="nav-item"><a class="nav-link" href="pagArticulo.jsp">Zona Outlet</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Formulario -->
+  <div class="container mt-5 mb-5">
+    <div class="card shadow-lg p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark">Registro de Tienda</h2>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#infoModal">
+          <i class="bi bi-info-circle"></i> Información
+        </button>
+      </div>
+      
+      <form id="registroForm" action="control">
+        <input type="hidden" name="opc" value="2">
+        
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre tienda</label>
+          <input type="text" class="form-control" id="nombre" name="nombre"  
+            title="Ingrese solo letras en el campo Nombre tienda" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="direccion" name="direccion" 
+            title="Ingrese solo letras, números y espacios en el campo Dirección" required>
+        </div>
+
+        <button type="button" id="registrarBtn" class="btn btn-dark w-100">Registrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de Información -->
+  <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="infoModalLabel">Información sobre Tiendas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6 class="fw-bold">Instrucciones para registro:</h6>
+              <ul>
+                <li>Complete todos los campos requeridos</li>
+                <li>El nombre de la tienda debe ser único</li>
+                <li>La dirección debe ser completa y precisa</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6 class="fw-bold">Beneficios:</h6>
+              <ul>
+                <li>Gestión centralizada de inventario</li>
+                <li>Reportes de ventas por tienda</li>
+                <li>Asignación de personal a tiendas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2025 Topitop. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Script para manejar el envío del formulario con confirmación
+    document.getElementById('registrarBtn').addEventListener('click', function() {
+      // Validar el formulario antes de mostrar la confirmación
+      let form = document.getElementById('registroForm');
+      let nombre = document.getElementById('nombre').value;
+      let direccion = document.getElementById('direccion').value;
+      
+      if (nombre && direccion) {
+        // Mostrar SweetAlert para confirmar el registro
+        Swal.fire({
+          title: "Confirmar registro",
+          text: "¿Estás seguro de registrar esta nueva tienda?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#198754",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí, registrar",
+          cancelButtonText: "Cancelar"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Enviar el formulario
+            form.submit();
+            
+            // Mostrar mensaje de éxito
+            Swal.fire({
+              title: "¡Registrado!",
+              text: "La tienda ha sido registrada correctamente.",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false
+            });
+          }
+        });
+      } else {
+        // Si falta algún campo, mostrar error
+        Swal.fire({
+          title: "Error",
+          text: "Por favor complete todos los campos requeridos.",
+          icon: "error"
+        });
+      }
+    });
+  </script>
+</body>
+</html>

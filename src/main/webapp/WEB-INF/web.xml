@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+	<servlet>
+		<servlet-name>tienda</servlet-name>
+		<servlet-class>Servlets.tiendaController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>tienda</servlet-name>
+		<url-pattern>/tienda</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>control</servlet-name>
+		<servlet-class>Servlets.control</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>control</servlet-name>
+		<url-pattern>/control</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>StockController</servlet-name>
+		<servlet-class>Servlets.StockController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StockController</servlet-name>
+		<url-pattern>/stock</url-pattern> <!-- Este es el mapeo del servlet que quieres como inicio -->
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>LoginControl</servlet-name>
+		<servlet-class>Servlets.LoginControl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginControl</servlet-name>
+		<url-pattern>/LoginControl</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>Inicio.jsp</welcome-file>
+	</welcome-file-list>
+
+</web-app>
+
+    
+
+    

@@ -1,0 +1,88 @@
+@charset "UTF-8";
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+h1 {
+  margin: 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.search-bar {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.search-bar input[type="text"] {
+  padding: 5px;
+}
+
+.search-bar button[type="submit"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.user-buttons a {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+section.hero {
+  background-image: url('foto/portada.jpg');
+  background-size: cover;
+  height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  text-align: center;
+  color: black;
+}
+
+.hero-content h2 {
+  font-size: 36px;
+  margin: 0;
+}
+
+.hero-content p {
+  font-size: 18px;
+}
+
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+text-align: center;
+}
