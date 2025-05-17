@@ -1,0 +1,457 @@
+create database topitop;
+use topitop;
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+
+--
+-- Estructura de tabla para la tabla `articulos`
+--
+
+CREATE TABLE `articulos` (
+  `IdArticulo` char(5) NOT NULL,
+  `Descripcion` varchar(45) DEFAULT NULL,
+  `PrecioUnidad` decimal(6,1) NOT NULL,
+  `Stock` int DEFAULT NULL,
+  PRIMARY KEY(`IdArticulo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- Estructura de tabla para la tabla `carrito`
+--
+
+CREATE TABLE `carrito` (
+  `carrito_id` int NOT NULL,
+  `cliente_id` int DEFAULT NULL,
+  `producto_id` int DEFAULT NULL,
+  `cantidad` int DEFAULT NULL,
+  PRIMARY KEY(`carrito_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `carrito`
+--
+ALTER TABLE `carrito`
+  MODIFY `carrito_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- Estructura de tabla para la tabla `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `categoria_id` int NOT NULL,
+  `nombre_categoria` varchar(225) DEFAULT NULL,
+  PRIMARY KEY(`categoria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `categoria_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- Estructura de tabla para la tabla `cliente`
+--
+
+CREATE TABLE `cliente` (
+  `cliente_id` int NOT NULL,
+  `nombre` varchar(225) DEFAULT NULL,
+  `apellido` varchar(225) DEFAULT NULL,
+  `direccion` varchar(225) DEFAULT NULL,
+  PRIMARY KEY(`cliente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `cliente_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `tarjeta` char(5) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `credito` decimal(8,1) DEFAULT NULL,
+  `PassWord` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Estructura de tabla para la tabla `detallepedido`
+--
+
+CREATE TABLE `detallepedido` (
+  `detalle_id` int NOT NULL,
+  `pedido_id` int DEFAULT NULL,
+  `producto_id` int DEFAULT NULL,
+  `cantidad` int DEFAULT NULL,
+  `precio` decimal(8,1) DEFAULT NULL,
+  primary key(`detalle_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `detallepedido`
+--
+ALTER TABLE `detallepedido`
+  MODIFY `detalle_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `empleado_id` int NOT NULL,
+  `tienda_id` int DEFAULT NULL,
+  `nombre` varchar(225) DEFAULT NULL,
+  `apellido` varchar(225) DEFAULT NULL,
+  `puesto` varchar(225) DEFAULT NULL,
+  primary key(`empleado_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  MODIFY `empleado_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- Estructura de tabla para la tabla `faccab`
+--
+
+CREATE TABLE `faccab` (
+  `NroFactura` char(8) NOT NULL,
+  `FechaFactura` date NOT NULL,
+  `tarjeta` char(5) NOT NULL,
+  `MontoTotal` decimal(10,2) NOT NULL,
+  primary key(`NroFactura`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Estructura de tabla para la tabla `facdet`
+--
+
+CREATE TABLE `facdet` (
+  `NroFactura` char(8) NOT NULL,
+  `IdArticulo` char(5) NOT NULL,
+  `Cantidad` int NOT NULL,
+  primary key(`NroFactura`, `IdArticulo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Estructura de tabla para la tabla `pedido`
+--
+
+CREATE TABLE `pedido` (
+  `pedido_id` int NOT NULL,
+  `cliente_id` int DEFAULT NULL,
+  `tienda_id` int DEFAULT NULL,
+  `fecha_pedido` date DEFAULT NULL,
+  primary key(`pedido_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  MODIFY `pedido_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `tienda`
+--
+
+CREATE TABLE `tienda` (
+  `tienda_id` int NOT NULL,
+  `nombre_tienda` varchar(225) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`tienda_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `tienda`
+--
+ALTER TABLE `tienda`
+  MODIFY `tienda_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+COMMIT;
+--
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE `producto` (
+  `producto_id` int NOT NULL,
+  `tienda_id` int DEFAULT NULL,
+  `categoria_id` int DEFAULT NULL,
+  `nombre_producto` varchar(225) DEFAULT NULL,
+  `cantidad_disponible` int DEFAULT NULL,
+  `precio_unitario` decimal(8,1) DEFAULT NULL,
+  primary key( `producto_id`),
+  CONSTRAINT `fk_producto_tienda` FOREIGN KEY (`tienda_id`) REFERENCES `tienda`(`tienda_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_producto_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categoria`(`categoria_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `producto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+-- --------------------------------------------------------
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`categoria_id`, `nombre_categoria`) VALUES
+(4, 'Ropa deportiva'),
+(5, 'Ropa casual'),
+(6, 'Camisas'),
+(7, 'Pantalones'),
+(8, 'Accesorios'),
+(9, 'Vestidos'),
+(10, 'Chaquetas');
+
+--
+-- Volcado de datos para la tabla `tienda`
+--
+
+INSERT INTO `tienda` (`tienda_id`, `nombre_tienda`, `direccion`) VALUES
+(25, 'Moda Fusion - San Isidro', 'Av. Conquistadores 456'),
+(26, 'Moda Fusion - La Molina', 'Calle Las Orquídeas 789'),
+(27, 'Moda Fusion - San Miguel', 'Av. La Marina 101'),
+(28, 'Moda Fusion - Miraflores', 'Av. Larco 123'),
+(29, 'Moda Fusion - San Isidro', 'Av. Conquistadores 456'),
+(30, 'Moda Fusion - La Molina', 'Calle Las Orquídeas 789'),
+(31, 'Moda Fusion - San Miguel', 'Av. La Marina 101'),
+(32, 'Moda Fusion - Centro de Lima', 'Jirón de la Unión 234'),
+(33, 'Moda Fusion - Surco', 'Av. El Polo 567'),
+(34, 'Moda Fusion - Barranco', 'Calle de los Suspiros 890'),
+(35, 'Moda Fusion - Magdalena', 'Av. Brasil 123'),
+(36, 'Moda Fusion - Villa el Salvador', 'Av. Huaylas 456');
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`producto_id`, `tienda_id`, `categoria_id`, `nombre_producto`, `cantidad_disponible`, `precio_unitario`) VALUES
+(23, 25, 10, 'Camisa de algodón', 20, 50.0),
+(24, 26, 7, 'Pantalón jeans', 15, 70.0),
+(25, 27, 5, 'Blusa estampada', 12, 40.0),
+(26, 28, 9, 'Vestido floral', 8, 80.0),
+(27, 29, 4, 'Short de mezclilla', 10, 35.0),
+(28, 30, 10, 'Polera básica', 25, 20.0),
+(29, 31, 6, 'Camisa de lino', 18, 60.0),
+(30, 32, 5, 'Falda plisada', 14, 50.0),
+(31, 33, 10, 'Chaqueta de cuero', 5, 130.0);
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`pedido_id`, `cliente_id`, `tienda_id`, `fecha_pedido`) VALUES
+(4, 4, 5, '2023-06-10'),
+(5, 5, 6, '2023-06-12');
+
+--
+-- Volcado de datos para la tabla `facdet`
+--
+
+INSERT INTO `facdet` (`NroFactura`, `IdArticulo`, `Cantidad`) VALUES
+('00000001', 'CHA02', 3),
+('00000001', 'POL01', 7),
+('00000002', 'PAN02', 2),
+('00000003', 'POL03', 1),
+('00000004', 'CHA02', 4),
+('00000004', 'MAL01', 1),
+('00000005', 'CHA01', 1),
+('00000006', 'CHA01', 3),
+('00000006', 'ZAP01', 1),
+('00000007', 'CHA01', 5),
+('00000007', 'MAL01', 2),
+('00000008', ' R02', 5),
+('00000009', ' R02', 2),
+('00000009', 'CHA01', 1),
+('00000010', 'POL01', 10),
+('00000010', 'POL02', 1),
+('00000011', 'PAN02', 10),
+('00000012', 'POL03', 10);
+
+--
+-- Volcado de datos para la tabla `faccab`
+--
+
+INSERT INTO `faccab` (`NroFactura`, `FechaFactura`, `tarjeta`, `MontoTotal`) VALUES
+('00000001', '2023-06-24', '11111', 502.00),
+('00000002', '2023-06-24', '11111', 78.00),
+('00000003', '2023-06-24', '11111', 56.00),
+('00000004', '2023-06-24', '11111', 401.00),
+('00000005', '2023-06-24', '11111', 188.00),
+('00000006', '2023-06-24', '11111', 644.00),
+('00000007', '2023-06-24', '33333', 1038.00),
+('00000008', '2023-07-21', '11111', 75.00),
+('00000009', '2023-07-21', 'visa', 218.00),
+('00000010', '2024-03-09', 'bbva', 376.00),
+('00000011', '2024-06-13', 'bbva', 390.00),
+('00000012', '2024-06-13', 'visa', 560.00);
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`empleado_id`, `tienda_id`, `nombre`, `apellido`, `puesto`) VALUES
+(9, 5, 'Ricardo', 'Gonzales', 'Vendedor'),
+(10, 5, 'Carmen', 'Torres', 'Cajero'),
+(11, 6, 'Pedro', 'Vega', 'Vendedor'),
+(12, 6, 'Sandra', 'Hernandez', 'Gerente');
+
+--
+-- Volcado de datos para la tabla `detallepedido`
+--
+
+INSERT INTO `detallepedido` (`detalle_id`, `pedido_id`, `producto_id`, `cantidad`, `precio`) VALUES
+(5, 4, 9, 3, 39.9),
+(6, 5, 10, 2, 49.9),
+(7, 6, 11, 1, 54.9);
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`tarjeta`, `nombre`, `credito`, `PassWord`) VALUES
+('bbva', 'Ramos Villar,Colonia', 1600.0, '1234'),
+('bcp', 'Vilchez Cardenas , Ana', 1300.0, '123'),
+('visa', 'Basilio Ormeño Martin , Franco', 2000.0, '123456');
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`cliente_id`, `nombre`, `apellido`, `direccion`) VALUES
+(1, 'María', 'González', 'Lima'),
+(2, 'Carlos', 'Sánchez', 'Arequipa'),
+(3, 'Ana', 'Torres', 'Cusco'),
+(4, 'Pedro', 'Vargas', 'Trujillo'),
+(42, 'Juan', 'Pérez', 'Av. Arequipa 123'),
+(43, 'María', 'Gómez', 'Jirón de la Unión 456'),
+(44, 'Carlos', 'López', 'Av. Javier Prado Este 789'),
+(45, 'Ana', 'Vargas', 'Calle San Martín 101'),
+(46, 'Luis', 'Torres', 'Av. Larco 246'),
+(47, 'Laura', 'Sánchez', 'Av. Paseo de la República 987'),
+(48, 'Pedro', 'Castro', 'Calle Las Begonias 321'),
+(49, 'Sofía', 'Fernández', 'Av. Tacna 654'),
+(50, 'Diego', 'Ruiz', 'Calle Los Olivos 753'),
+(51, 'Carolina', 'Ramírez', 'Av. Salaverry 852'),
+(53, 'Carlos', 'Quispe', 'VES');
+
+
+--
+-- Volcado de datos para la tabla `carrito`
+--
+
+INSERT INTO `carrito` (`carrito_id`, `cliente_id`, `producto_id`, `cantidad`) VALUES
+(5, 4, 9, 3),
+(6, 4, 10, 2),
+(7, 5, 11, 1);
+
+--
+-- Volcado de datos para la tabla `articulos`
+--
+
+INSERT INTO `articulos` (`IdArticulo`, `Descripcion`, `PrecioUnidad`, `Stock`) VALUES
+(' GOR0', 'Abrigo de invierno', 30.0, 10),
+(' R02', 'Vestido floral', 15.0, 4),
+('CHA01', 'Blazer formal', 188.0, 0),
+('CHA02', 'Camisa de algodón', 88.0, 14),
+('CHA03', 'Camisa de lino', 128.0, 20),
+('MAL01', 'Chaqueta de cuero', 49.0, 7),
+('PAN01', 'Collar de perlas', 22.0, 13),
+('PAN02', 'Falda plisada', 39.0, 2),
+('POL01', 'Pantalón jeans', 34.0, 3),
+('POL02', 'Vestido floral', 36.0, 11),
+('POL03', 'Zapatillas de running', 56.0, 1),
+('ZAP01', 'Short de mezclilla', 80.0, 9);
+
+
+
+
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+DELIMITER $$
+--
+-- Procedimientos
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPdetalle` (`fac` CHAR(8), `coda` CHAR(6), `can` INT)   BEGIN
+insert into facdet values (fac,coda, can);
+update articulos set stock= stock -can where idarticulo=coda;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPFACTURA` (IN `codc` CHAR(8), IN `tot` NUMERIC(8,1))   BEGIN
+declare nro int;
+declare fac char(8);
+select ifnull(max(nrofactura),0) + 1  from faccab into nro;
+set fac = lpad(nro,8,'0');
+insert into faccab values (fac,current_date(),codc,tot);
+select fac;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_cliente` (IN `cliente_id` INT)   BEGIN
+    DELETE FROM cliente WHERE cliente_id = cliente_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_producto` (IN `producto_id` INT)   BEGIN
+    DELETE FROM producto WHERE producto_id = producto_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_eliminar_tienda` (IN `nro` INT)   BEGIN
+    DELETE FROM tienda WHERE tienda_id = nro;
+END$$
+
+DELIMITER ;
+
+
+CREATE TABLE Persona (
+  id_persona INT PRIMARY KEY AUTO_INCREMENT,
+  nombres VARCHAR(100) NOT NULL,
+  apellidos VARCHAR(100) NOT NULL,
+  dni VARCHAR(15) UNIQUE NOT NULL
+);
+
+CREATE TABLE Rol (
+  id_rol INT PRIMARY KEY AUTO_INCREMENT,
+  nombre_rol VARCHAR(50) NOT NULL UNIQUE,
+  descripcion VARCHAR(255)
+);
+CREATE TABLE Usuario (
+  id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+  password VARCHAR(255) NOT NULL, 
+  estado BOOLEAN DEFAULT TRUE, 
+  id_persona INT,
+  id_rol INT,
+  FOREIGN KEY (id_persona) REFERENCES Persona(id_persona),
+  FOREIGN KEY (id_rol) REFERENCES Rol(id_rol)
+);
+
+INSERT INTO rol (nombre_rol, descripcion) VALUES
+('Administrador', 'Acceso total al sistema'),
+('Cliente', 'Puede comprar productos y ver su perfil'),
+('Vendedor', 'Puede gestionar productos y ventas');
+
+INSERT INTO persona (dni, nombres, apellidos) VALUES
+('12345678', 'Juan', 'Pérez Gómez'),
+('87654321', 'Lucía', 'Ramírez Soto'),
+('11223344', 'Carlos', 'López Diaz');
+
+INSERT INTO usuario (password, estado, id_persona, id_rol) VALUES
+('admin123', 1, 1, 1),  -- Juan como Administrador dni 12345678 clave -> admin123
+('cliente123', 1, 2, 2), -- Lucía como Cliente dni 87654321 clave -> cliente123
+('vendedor123', 1, 3, 3); -- Carlos como Vendedor 11223344 clave -> vendedor123
+
+
+UPDATE articulos SET Stock = 20 WHERE IdArticulo = 'CHA01';
+UPDATE articulos SET Stock = 17 WHERE IdArticulo = 'MAL01';
+UPDATE articulos SET Stock = 32 WHERE IdArticulo = 'PAN02';
+UPDATE articulos SET Stock = 23 WHERE IdArticulo = 'POL01';
+UPDATE articulos SET Stock = 22 WHERE IdArticulo = 'POL03';
+UPDATE articulos SET Stock = 25 WHERE IdArticulo = 'R02';
+UPDATE articulos SET Stock = 29 WHERE IdArticulo = 'ZAP01';
+
+
